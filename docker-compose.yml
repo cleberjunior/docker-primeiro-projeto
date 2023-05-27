@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  web:
+    image: webdevops/php-apache:alpine-php7
+    container_name: my-apache-app
+    ports:
+      - "4500:80"
+    volumes:
+      - ./website:/app
+
+  db:
+    image: mysql-5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - /data/mysql:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8080:80"
+    volumes:
+      - ./uploads.ini:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
